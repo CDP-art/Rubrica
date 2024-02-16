@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../App.css";
 import SearchBar from "./searchBar";
+import AddContact from './newContact';
 
 export default function Rubrica() {
     const [rubrica, setRubrica] = useState([]);
     const [filteredRubrica, setFilteredRubrica] = useState([]);
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [telephone, setTelephone] = useState("");
+    const [nome, setNome] = useState("");
+    const [cognome, setCognome] = useState("");
+    const [telefono, setTelefono] = useState("");
 
 
     //* Rubrica dal server
@@ -34,19 +35,19 @@ export default function Rubrica() {
     const handleSearch = (searchTerm /*Quello che viene scritto nella barra di ricerca*/) => {
 
         const filteredContacts = rubrica.filter((persona) => {
-            //viene filtrato l'array rubrica (tutti i contatti contatti).
+            //viene filtrato l'array rubrica (tutti i contatti).
             //Per ogni indice dell'array, viene creato un nuovo array con un singolo oggetto.
             /*
                 filteredContacts = [
                     {"id": 1, "name": "franco", "surname": "pippo", "telephone": "123"}
                 ]
             */
-            const { name, surname, telephone } = persona;
+            const { nome, cognome, telefono } = persona;
             //Ora si estrae le proprietà name, surname, telephone della singola "persona"
             return (
-                name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                telephone.includes(searchTerm)
+                nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                cognome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                telefono.includes(searchTerm)
             );
         });
 
@@ -57,25 +58,6 @@ export default function Rubrica() {
         // }
         setFilteredRubrica(searchTerm === "" ? rubrica : filteredContacts);
     };
-
-
-    // * Aggiungi Contatto
-    async function handleAddContacts() {
-        try {
-            const res = await axios.post("http://localhost:8000/rubrica", {
-                name, surname, telephone
-            });
-            alert("Contatto Aggiunto")
-            console.log(res.data);
-            setRubrica([...rubrica, res.data])
-            setFilteredRubrica([...rubrica, res.data])
-            setName("")
-            setSurname("")
-            setTelephone("")
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     return (
         <>
@@ -91,13 +73,13 @@ export default function Rubrica() {
                                 <div className='nomi'>
                                     <h4>Contatti</h4>
                                     {filteredRubrica.map((persona, id) => (
-                                        <p key={id}> {persona.name} {persona.surname}</p>
+                                        <p key={id}> {persona.nome} {persona.cognome}</p>
                                     ))}
                                 </div>
                                 <div className="numeri">
                                     <h4>N. di telefono</h4>
                                     {filteredRubrica.map((persona, id) => (
-                                        <p key={id}>{persona.telephone}</p>
+                                        <p key={id}>{persona.telefono}</p>
                                     ))}
                                 </div>
                             </div>
@@ -106,28 +88,17 @@ export default function Rubrica() {
                     >Nessun contatto trovato</p>}
                 </div>
             </main>
-            <div className='aggiungiContatto'>
-                <div className='datiContatto'>
-                    <input
-                        type='text'
-                        placeholder='Nome'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)} />
-                    <input
-                        type='text'
-                        placeholder='Cognome'
-                        value={surname}
-                        onChange={(e) => setSurname(e.target.value)} />
-                    <input
-                        type='text'
-                        placeholder='Numero di Telefono'
-                        value={telephone}
-                        onChange={(e) => setTelephone(e.target.value)} />
-                </div>
-                <div className='aggiungi'>
-                    <button type='button' onClick={handleAddContacts}>Aggiungi</button>
-                </div>
-            </div>
+            <AddContact
+                nome={nome}
+                cognome={cognome}
+                telefono={telefono}
+                setNome={setNome}
+                setCognome={setCognome}
+                setTelefono={setTelefono}
+                rubrica={rubrica}
+                setRubrica={setRubrica}
+                filteredRubrica={filteredRubrica}
+                setFilteredRubrica={setFilteredRubrica} />
         </>
     );
 }

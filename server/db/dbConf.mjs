@@ -2,11 +2,12 @@ import mysql from "mysql"
 
 // *  Configurazione della connessione al db mySQL
 const connection = mysql.createConnection({
-    host: 'localhost',
-    port: "",
-    user: "",
-    password: "",
-    database: "nome_db",
+    host: "localhost",
+    port: 8889,
+    user: "root",
+    password: "root",
+    database: "rubrica",
+    socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
 });
 
 // * Connessione al DATABASE

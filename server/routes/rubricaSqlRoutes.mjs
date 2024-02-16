@@ -1,6 +1,7 @@
 import {
     getContatti,
-    addContattoDB
+    addContattoDB,
+    deleteContatto
 } from "../db/dbManager.mjs";
 
 
@@ -27,10 +28,30 @@ async function addContattoRoute(req, res) {
             .status(200)
             .send("Contatto aggiunto con successo!")
     } catch (err) {
-        console.err("Errore durante l'aggiunta del contatto", err)
+        console.error("Errore durante l'aggiunta del contatto", err)
         res
             .status(500)
             .send(err)
+    }
+};
+
+//* ELIMINA CONTATTO
+
+async function deleteContattoRoute(req, res) {
+
+    const contactID = req.params.id
+
+    try {
+        await deleteContatto(contactID);
+        res
+            .status(200)
+            .send("Contatto eliminato con successo")
+
+    } catch (err) {
+        console.error("Errore durante l'eliminazione del contatto", err);
+        res
+            .status(500)
+            .send("Errore durante l'eliminazione del contatto")
     }
 };
 
@@ -38,5 +59,6 @@ async function addContattoRoute(req, res) {
 
 export {
     getRubrica,
-    addContattoRoute
+    addContattoRoute,
+    deleteContattoRoute
 };

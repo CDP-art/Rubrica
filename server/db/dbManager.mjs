@@ -29,7 +29,24 @@ async function addContattoDB(nome, cognome, telefono, indirizzo) {
     })
 }
 
+//* ELIMINA CONTATTO
+
+async function deleteContatto(id) {
+    return new Promise((resolve, reject) => {
+        connection.query("DELETE FROM contatti WHERE id = ?", [id],
+            (error, results) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(results)
+                }
+            })
+    })
+};
+
+
 export {
     getContatti,
-    addContattoDB
+    addContattoDB,
+    deleteContatto
 };
