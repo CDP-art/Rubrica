@@ -1,7 +1,8 @@
 import {
     getContatti,
     addContattoDB,
-    deleteContatto
+    deleteContatto,
+    updateContatto
 } from "../db/dbManager.mjs";
 
 
@@ -55,10 +56,26 @@ async function deleteContattoRoute(req, res) {
     }
 };
 
+//* MODIFICA CONTATTO
+async function modificaContatto(req, res) {
+    try {
+        const { nome, cognome, telefono, indirizzo, id } = req.body
+        await updateContatto(nome, cognome, telefono, indirizzo, id);
+        res
+            .status(200)
+            .send("Contatto modificato!")
+    } catch (err) {
+        console.error("Errore durante la modifica del contatto", err);
+        res
+            .status(500)
+            .send("Errore durante la modifica del contatto")
+    }
+};
 
 
 export {
     getRubrica,
     addContattoRoute,
-    deleteContattoRoute
+    deleteContattoRoute,
+    modificaContatto
 };

@@ -4,7 +4,7 @@ import connection from './dbConf.mjs';
 //* CONTATTI
 async function getContatti() {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM contatti', (error, results, fields) => {
+        connection.query('SELECT * FROM contatti', (error, results) => {
             if (error) {
                 reject(error);
             } else {
@@ -44,9 +44,25 @@ async function deleteContatto(id) {
     })
 };
 
+//* MODIFICA CONTATTO
+
+async function updateContatto(nome, cognome, telefono, indirizzo, id) {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE contatti SET nome = ?, cognome = ?, telefono = ?, indirizzo = ? WHERE id = ?",
+            [nome, cognome, telefono, indirizzo, id],
+            (error, results) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(results)
+                }
+            })
+    })
+};
 
 export {
     getContatti,
     addContattoDB,
-    deleteContatto
+    deleteContatto,
+    updateContatto
 };

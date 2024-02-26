@@ -26,12 +26,14 @@ app.use(bodyParser.json())
 import {
     getRubrica,
     addContattoRoute,
-    deleteContattoRoute
+    deleteContattoRoute,
+    modificaContatto
 } from './routes/rubricaSqlRoutes.mjs'
 
 app.get('/rubrica', getRubrica);
 app.post("/rubrica", addContattoRoute);
 app.delete("/rubrica/:id", deleteContattoRoute);
+app.put("/rubrica/:id", modificaContatto);
 
 app.get('/', (req, res) => {
     res.send(`
