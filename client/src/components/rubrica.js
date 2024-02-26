@@ -70,7 +70,7 @@ export default function Rubrica() {
                         (<p style={{ textAlign: "center" }}>Non hai nessun contatto in Rubrica</p>) :
                         (
                             <div className='contatti'>
-                                <div className='nomi'>
+                                {/* <div className='nomi'>
                                     <h4>Contatti</h4>
                                     {filteredRubrica.map((persona, id) => (
                                         <p key={id}> {persona.nome} {persona.cognome}</p>
@@ -81,8 +81,34 @@ export default function Rubrica() {
                                     {filteredRubrica.map((persona, id) => (
                                         <p key={id}>{persona.telefono}</p>
                                     ))}
+                                </div> */}
+
+                                <div className='nome'>
+                                    <h4>Nome</h4>
+                                    {rubrica.map((contatto, id) => (
+                                        <p key={id}>{contatto.nome}</p>
+                                    ))}
+                                </div>
+                                <div className='cognome'>
+                                    <h4>Cognome</h4>
+                                    {rubrica.map((contatto, id) => (
+                                        <p key={id}>{contatto.cognome}</p>
+                                    ))}
+                                </div>
+                                <div className='numeroTelefono'>
+                                    <h4>N. di Telefono</h4>
+                                    {rubrica.map((contatto, id) => (
+                                        <p key={id}>{contatto.telefono}</p>
+                                    ))}
+                                </div>
+                                <div className='indirizzo'>
+                                    <h4>Indirizzo</h4>
+                                    {rubrica.map((contatto, id) => (
+                                        <p key={id}>{contatto.indirizzo}</p>
+                                    ))}
                                 </div>
                             </div>
+
                         )}
                     {filteredRubrica.length === 0 && <p style={{ width: "100%", textAlign: "center" }}
                     >Nessun contatto trovato</p>}
